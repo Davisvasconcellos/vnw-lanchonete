@@ -23,6 +23,12 @@ A entrega deve incluir:
 
 ---
 
+## Visão Geral da Aplicação
+
+Abaixo, uma captura de tela da interface principal do simulador e da documentação interativa.
+
+![Screenshot do Simulador de Pedidos](./ui/assets/img/screenshot-simulador.png)
+
 ## Tecnologias Utilizadas
 
 *   **Backend:** Node.js, Express.js, PostgreSQL
