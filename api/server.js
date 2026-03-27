@@ -35,6 +35,11 @@ pool.connect()
 // ROUTES
 // =============================
 
+// 🔹 GET / (Health Check)
+app.get('/', (req, res) => {
+  res.json({ status: 'online' });
+});
+
 // 🔹 GET /produtos
 app.get('/produtos', async (req, res) => {
   try {

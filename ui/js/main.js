@@ -1,4 +1,4 @@
-import { getProdutos, getClientes, getPedidos, createPedido, getPedidoResumido, getPedidoDetalhe, updateOrderStatus } from './api.js';
+import { getApiStatus, getProdutos, getClientes, getPedidos, createPedido, getPedidoResumido, getPedidoDetalhe, updateOrderStatus } from './api.js';
 import { createProductCard, createOrderCard, createClientButton, createOrderDetailItem } from './components.js';
 
 let allClientes = [];
@@ -331,9 +331,43 @@ function setupEventListeners() {
 // =========================
 // INICIALIZAÇÃO
 // =========================
-document.addEventListener('DOMContentLoaded', () => {
-    carregarProdutos();
-    carregarClientes();
-    carregarPedidos();
-    setupEventListeners();
-});
+
+/**
+ * Inicia a aplicação principal, carregando todos os dados e configurando os eventos.
+ */
+async function initializeApp() {
+  await Promise.all([
+    carregarProdutos(),
+    carregarClientes(),
+    carregarPedidos()
+  ]);
+  setupEventListeners();
+
+  // Esconde o overlay e mostra o conteúdo principal
+  const loadingOverlay = document.getElementById('api-loading-overlay');
+  const mainContent = document.getElementById('main-content');
+  loadingOverlay.classList.add('opacity-0', 'pointer-events-none');
+  mainContent.classList.remove('hidden');
+  setTimeout(() => mainContent.classList.remove('opacity-0'), 50); // Fade-in
+}
+
+/**
+ * Verifica o status da API repetidamente até que ela esteja online.
+ */
+async function checkApiStatus() {
+  const loadingMessage = document.getElementById('loading-message');
+  try {
+    const status = await getApiStatus();
+    if (status.status === 'online') {
+      loadingMessage.textContent = 'Servidor online. Carregando aplicação...';
+      initializeApp();
+    } else {
+      throw new Error('API retornou um status inesperado.');
+    }
+  } catch (error) {
+    loadingMessage.textContent = 'Falha ao conectar. Tentando novamente em 10s...';
+    setTimeout(checkApiStatus, 10000); // Tenta novamente após 10 segundos
+  }
+}
+
+document.addEventListener('DOMContentLoaded', checkApiStatus);

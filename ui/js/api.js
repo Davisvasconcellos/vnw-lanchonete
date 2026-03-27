@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://vnw-lanchonete-api.onrender.com';
 
 /**
  * Função genérica para realizar chamadas fetch.
@@ -19,6 +19,9 @@ async function fetchData(endpoint, options = {}) {
     throw error; // Re-lança o erro para ser tratado por quem chamou a função
   }
 }
+
+// 🔹 PRODUTOS
+export const getApiStatus = () => fetchData('/');
 
 // 🔹 PRODUTOS
 export const getProdutos = () => fetchData('/produtos');
