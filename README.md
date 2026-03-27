@@ -29,6 +29,12 @@ Abaixo, uma captura de tela da interface principal do simulador e da documentaç
 
 ![Screenshot do Simulador de Pedidos](./ui/assets/img/screenshot-simulador.png)
 
+## Acesso ao Projeto
+
+A aplicação está disponível para acesso e teste no seguinte link:
+
+**[Acessar a Aplicação Online](https://vnw-lanchonete-ui.onrender.com/)**
+
 ## Tecnologias Utilizadas
 
 *   **Backend:** Node.js, Express.js, PostgreSQL

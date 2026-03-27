@@ -4,6 +4,7 @@ import { createProductCard, createOrderCard, createClientButton, createOrderDeta
 let allClientes = [];
 let selectedClientId = null;
 let cart = {}; // Objeto para armazenar os itens do carrinho (productId: quantity)
+let countdownInterval;
 let selectedOrderId = null; // Novo: Para armazenar o ID do pedido selecionado
 
 /**
@@ -352,6 +353,33 @@ async function initializeApp() {
 }
 
 /**
+ * Inicia um contador regressivo na tela antes de tentar a reconexão.
+ * @param {number} seconds - A duração do contador em segundos.
+ */
+function startRetryCountdown(seconds) {
+  const countdownMessageEl = document.getElementById('countdown-message');
+  let remaining = seconds;
+
+  countdownMessageEl.classList.remove('hidden');
+
+  const updateCountdown = () => {
+    countdownMessageEl.textContent = `Tentando novamente em ${remaining}s...`;
+    remaining--;
+  };
+
+  updateCountdown(); // Mostra imediatamente
+
+  countdownInterval = setInterval(() => {
+    if (remaining < 0) {
+      clearInterval(countdownInterval);
+      checkApiStatus();
+    } else {
+      updateCountdown();
+    }
+  }, 1000);
+}
+
+/**
  * Verifica o status da API repetidamente até que ela esteja online.
  */
 async function checkApiStatus() {
@@ -365,8 +393,14 @@ async function checkApiStatus() {
       throw new Error('API retornou um status inesperado.');
     }
   } catch (error) {
-    loadingMessage.textContent = 'Falha ao conectar. Tentando novamente em 10s...';
-    setTimeout(checkApiStatus, 10000); // Tenta novamente após 10 segundos
+    loadingMessage.textContent = 'Falha ao conectar ao servidor.';
+    document.getElementById('loading-submessage').classList.add('hidden'); // Esconde a submensagem
+    
+    // Limpa qualquer contador anterior antes de iniciar um novo
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+    }
+    startRetryCountdown(10);
   }
 }
 
