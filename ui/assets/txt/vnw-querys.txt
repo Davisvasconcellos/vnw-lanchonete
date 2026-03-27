@@ -1,0 +1,196 @@
+-- ==========================================================================================
+-- CONSULTAS RELEVANTES - Lanchonete Sabor do Bairro
+-- ==========================================================================================
+
+
+-- ============
+-- LISTAGENS
+-- ============
+
+-- 1. Listar todos os pedidos com nome do cliente (se tiver)
+-- um por linha 
+SELECT 
+    p.id AS pedido_id,
+    p.data_pedido,
+    COALESCE(c.nome, 'Cliente Balcão') AS cliente,
+    p.tipo,
+    p.status,
+    p.total
+FROM pedidos p
+LEFT JOIN clientes c ON p.cliente_id = c.id
+ORDER BY p.data_pedido DESC;
+
+
+-- ou histórico dele. esse é legal
+SELECT 
+    p.id, 
+    p.data_pedido, 
+    p.status, 
+    p.total,
+    STRING_AGG(pr.nome, ', ') AS itens
+FROM pedidos p
+LEFT JOIN itens_pedido ip ON p.id = ip.pedido_id
+LEFT JOIN produtos pr ON ip.produto_id = pr.id
+WHERE p.cliente_id = 1
+GROUP BY p.id
+ORDER BY p.data_pedido DESC;
+
+
+
+-- ou assim, que a gente pode usar o COALESCE para os pedidos que forem no balcao sem um cliente cadastrado
+-- quando o cliente é null, o nome dele vira 'Cliente Balcão'
+-- e o STRING_AGG para agrupar os itens numa mesma linha e tem um macete legal, se forem 2 produtos usa o x para a quantidade.
+-- entra: pr.nome || ' (x' || ip.quantidade || ')'
+-- vira: 'X-Tudo' || ' (x' || 2 || ')' = "X-Tudo (x2)"
+-- e podemos por tudo em uma linha só resumindo. 
+-- legal né?
+
+SELECT 
+    p.id AS pedido_id,
+    p.data_pedido,
+    COALESCE(c.nome, 'Cliente Balcão') AS cliente_nome,
+    p.tipo,
+    p.status,
+    p.observacao,
+    p.total,
+    STRING_AGG(pr.nome || ' (x' || ip.quantidade || ' - R$' || ip.preco_unitario || ')', ', ') AS itens
+FROM pedidos p
+LEFT JOIN clientes c ON p.cliente_id = c.id
+LEFT JOIN itens_pedido ip ON p.id = ip.pedido_id
+LEFT JOIN produtos pr ON ip.produto_id = pr.id
+WHERE p.id = 1
+GROUP BY p.id, c.nome;
+
+
+
+
+-- 2. Detalhe completo de um pedido (ex: pedido 1)
+SELECT 
+    pr.nome AS produto,
+    ip.quantidade,
+    ip.preco_unitario,
+    (ip.quantidade * ip.preco_unitario) AS subtotal
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+WHERE ip.pedido_id = 1;
+
+
+
+-- 3. Total de vendas por status
+SELECT
+	status,
+	COUNT(*) AS quantidade,
+	SUM(total) AS valor_total
+FROM pedidos 
+GROUP BY status;
+
+-- ou pode por uma ordem preferencial para o status
+-- assim facilita caso o front tenha alguma UX visual com numeros
+-- ex: o 1 sempre é pendente, 2 preparando, 3 pronto , 4 entregue , 5 cancelado
+
+SELECT 
+    status,
+    COUNT(*) AS quantidade,
+    SUM(total) AS valor_total
+FROM pedidos
+GROUP BY status
+ORDER BY 
+    CASE status 
+        WHEN 'pendente' THEN 1
+        WHEN 'em_preparo' THEN 2
+        WHEN 'pronto' THEN 3
+        WHEN 'entregue' THEN 4
+        WHEN 'cancelado' THEN 5
+    END;
+
+
+-- 4. Produtos mais vendidos
+SELECT 
+    pr.nome,
+    SUM(ip.quantidade) AS quantidade_vendida,
+    SUM(ip.quantidade * ip.preco_unitario) AS valor_total_vendido
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+GROUP BY pr.nome
+ORDER BY quantidade_vendida DESC;
+
+
+-- Vendas do Dia (hoje)
+SELECT 
+    COUNT(*) AS total_pedidos,
+    SUM(total) AS faturamento_dia
+FROM pedidos
+WHERE DATE(data_pedido) = CURRENT_DATE;
+
+
+-- Produtos Mais Vendidos (Top 10)
+SELECT 
+    pr.nome,
+    SUM(ip.quantidade) AS quantidade_vendida,
+    SUM(ip.quantidade * ip.preco_unitario) AS valor_total
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+GROUP BY pr.nome
+ORDER BY quantidade_vendida DESC
+LIMIT 10;
+
+
+
+
+
+-- 5. Lista de Produtos (com categoria)
+SELECT 
+    p.id,
+    c.nome AS categoria,
+    p.nome,
+    p.descricao,
+    p.preco,
+    p.disponivel
+FROM produtos p
+JOIN categorias c ON p.categoria_id = c.id
+ORDER BY c.nome, p.nome;
+
+-- 6. Lista de Clientes
+SELECT 
+    id,
+    nome,
+    telefone,
+    email,
+    endereco,
+    data_cadastro
+FROM clientes
+ORDER BY nome;
+
+
+-- ============
+-- INSERTS 
+-- ============
+
+-- 7. Cadastro de Novo Cliente
+INSERT INTO clientes (nome, telefone, email, endereco)
+VALUES ('Lucas Mendes', '(21) 94444-5555', 'lucas@email.com', 'Rua Exemplo, 100')
+RETURNING id, nome, telefone;
+
+-- 8. Cadastro de Novo Produto
+INSERT INTO produtos (categoria_id, nome, descricao, preco, disponivel)
+VALUES (1, 'X-Frango', 'Hambúrguer de frango grelhado com queijo e alface', 15.90, true)
+RETURNING id, nome, preco;
+
+
+-- ============
+-- UPDATES 
+-- ============
+-- 9. Atualizar Status do Pedido
+UPDATE pedidos 
+SET status = 'em_preparo' 
+WHERE id = 1;
+
+-- Ou com data de atualização
+-- (melhor prática, eu prefiro assim. mas tem que alterar a tabela já criada para ter a coluna nova):
+ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+UPDATE pedidos 
+SET status = 'pronto', 
+    atualizado_em = CURRENT_TIMESTAMP 
+WHERE id = 2;
+

@@ -1,0 +1,108 @@
+// =============================================
+// Lanchonete "Sabor do Bairro" - Diagrama + Dados de Exemplo
+// =============================================
+
+Table clientes {
+  id              serial [pk]
+  nome            varchar(100) [not null]
+  telefone        varchar(15) [unique]
+  email           varchar(100) [unique]
+  endereco        varchar(200)
+  data_cadastro   timestamp [default: `now()`]
+}
+
+Table categorias {
+  id              serial [pk]
+  nome            varchar(50) [not null, unique]
+}
+
+Table produtos {
+  id              serial [pk]
+  categoria_id    int
+  nome            varchar(80) [not null]
+  descricao       text
+  preco           decimal(10,2) [not null]
+  disponivel      boolean [default: true]
+}
+
+Table pedidos {
+  id              serial [pk]
+  cliente_id      int                     // pode ser null (pedido balcão)
+  data_pedido     timestamp [default: `now()`]
+  tipo            varchar(20) [default: 'consumo_local']
+  status          varchar(20) [default: 'pendente']
+  observacao      text
+  total           decimal(10,2) [default: 0]
+}
+
+Table itens_pedido {
+  id              serial [pk]
+  pedido_id       int
+  produto_id      int
+  quantidade      int [not null, default: 1]
+  preco_unitario  decimal(10,2) [not null]
+  observacao_item text
+}
+
+Table pagamentos {
+  id              serial [pk]
+  pedido_id       int [unique]
+  metodo          varchar(20) [not null]
+  valor           decimal(10,2) [not null]
+  data_pagamento  timestamp [default: `now()`]
+  status          varchar(20) [default: 'pendente']
+}
+
+// ==================== RELACIONAMENTOS (Refs) ====================
+
+Ref: produtos.categoria_id > categorias.id           // many-to-one
+
+Ref pedidos_cliente: pedidos.cliente_id > clientes.id     // many-to-one (um cliente pode ter muitos pedidos)
+
+Ref: itens_pedido.pedido_id > pedidos.id             // many-to-one
+Ref: itens_pedido.produto_id > produtos.id           // many-to-one
+
+Ref: pagamentos.pedido_id > pedidos.id               // one-to-one
+
+// ==================== DADOS DE EXEMPLO (Records) ====================
+
+Records categorias(id, nome) {
+  1, 'Lanches'
+  2, 'Bebidas'
+  3, 'Sobremesas'
+  4, 'Acompanhamentos'
+}
+
+Records produtos(id, categoria_id, nome, preco, disponivel) {
+  1, 1, 'X-Tudo', 18.90, true
+  2, 1, 'X-Bacon', 16.50, true
+  3, 2, 'Coca-Cola 350ml', 6.00, true
+  4, 2, 'Suco de Laranja', 7.50, true
+  5, 3, 'Brigadeiro', 4.00, true
+  6, 1, 'Hot Dog', 12.00, true
+}
+
+Records clientes(id, nome, telefone, email) {
+  1, 'João Silva', '(21) 98765-4321', 'joao@email.com'
+  2, 'Maria Oliveira', '(21) 99876-5432', 'maria@email.com'
+  3, 'Pedro Santos', '(21) 97654-3210', null
+}
+
+Records pedidos(id, cliente_id, tipo, status, total) {
+  1, 1, 'consumo_local', 'pronto', 24.90
+  2, null, 'retirada', 'pendente', 31.50     // pedido no balcão sem cliente cadastrado
+  3, 2, 'consumo_local', 'em_preparo', 18.00
+}
+
+Records itens_pedido(id, pedido_id, produto_id, quantidade, preco_unitario) {
+  1, 1, 1, 1, 18.90     // 1 X-Tudo
+  2, 1, 3, 1, 6.00      // 1 Coca-Cola
+  3, 2, 2, 2, 16.50     // 2 X-Bacon
+  4, 3, 5, 3, 4.00      // 3 Brigadeiros
+  5, 3, 4, 1, 7.50      // 1 Suco de Laranja
+}
+
+Records pagamentos(id, pedido_id, metodo, valor, status) {
+  1, 1, 'pix', 24.90, 'pago'
+  2, 3, 'dinheiro', 18.00, 'pendente'
+}

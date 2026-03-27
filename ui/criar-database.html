@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Criar Database - VNW Lanchonete</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "tertiary": "#005020",
+              "primary-container": "#1d4ed8",
+              "surface-container-low": "#f2f4f6",
+              "inverse-on-surface": "#eff1f3",
+              "surface-dim": "#d8dadc",
+              "on-tertiary-fixed": "#002109",
+              "on-primary": "#ffffff",
+              "background": "#f7f9fb",
+              "secondary-fixed": "#d3e4fe",
+              "on-tertiary-container": "#5cf083",
+              "on-secondary-fixed": "#0b1c30",
+              "surface-bright": "#f7f9fb",
+              "outline-variant": "#c4c5d7",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed": "#dce1ff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eceef0",
+              "outline": "#747686",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#434655",
+              "secondary-container": "#d0e1fb",
+              "on-error": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#b7c4ff",
+              "surface": "#f7f9fb",
+              "on-surface": "#191c1e",
+              "tertiary-container": "#006b2d",
+              "on-secondary-fixed-variant": "#38485d",
+              "on-background": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#cad3ff",
+              "on-secondary-container": "#54647a",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#b7c8e1",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#6bff8f",
+              "on-tertiary-fixed-variant": "#005321",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-fixed": "#001551",
+              "tertiary-fixed-dim": "#4ae176",
+              "secondary": "#505f76",
+              "on-primary-fixed-variant": "#0039b5",
+              "primary": "#0037b0",
+              "surface-tint": "#2151da",
+              "primary-fixed-dim": "#b7c4ff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-surface font-body min-h-screen">
+    <!-- TopAppBar -->
+    <header
+      class="bg-white dark:bg-[#191c1e] flex justify-between items-center px-6 py-4 w-full z-50 fixed top-0 left-0"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="text-2xl font-black text-[#0037b0] dark:text-[#1d4ed8] font-headline"
+          >Simulador</span
+        >
+      </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#f2f4f6] dark:bg-[#191c1e] flex-col p-4 z-40 mt-16 rounded-r-xl"
+    >
+      <div class="mb-8 px-2">
+        <h2 class="text-xl font-bold text-[#0037b0] font-headline">
+          VNW-Lanchonete
+        </h2>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="index.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">smartphone</span>
+          <span class="font-medium">Simular Ambiente</span>
+        </a>
+        <a href="diagrama.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">schema</span>
+          <span class="font-medium">Diagrama</span>
+        </a>
+        <div class="flex items-center gap-3 bg-[#0037b0] text-white rounded-xl p-3 active:scale-95 duration-200 cursor-pointer">
+          <span class="material-symbols-outlined">database</span>
+          <span class="font-medium">Criar Database</span>
+        </div>
+        <a href="inserir-dados.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">file_upload</span>
+          <span class="font-medium">Inserir Dados</span>
+        </a>
+        <a href="querys.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">query_stats</span>
+          <span class="font-medium">Querys</span>
+        </a>
+      </nav>
+    </aside>
+    <main class="pt-24 pb-20 lg:ml-64 px-4 md:px-8 max-w-7xl mx-auto">
+      <h1 class="text-3xl font-bold font-headline mb-4">Criação das Tabelas</h1>
+      <p class="text-on-surface-variant mb-8">Este script SQL é responsável por criar toda a estrutura do banco de dados da lanchonete, incluindo tabelas, colunas, chaves primárias e relacionamentos.</p>
+      
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+        <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+          <h2 class="font-bold text-lg font-headline">Script de Criação (PostgreSQL)</h2>
+          <button id="copy-button" class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+            <span class="material-symbols-outlined text-sm">content_copy</span>
+            <span id="copy-text">Copiar</span>
+          </button>
+        </div>
+        <div class="p-4">
+          <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="sql-code" class="language-sql">-- =============================================
+-- CRIAÇÃO DAS TABELAS - Lanchonete Sabor do Bairro
+-- =============================================
+
+CREATE TABLE IF NOT EXISTS clientes (
+    id              SERIAL PRIMARY KEY,
+    nome            VARCHAR(100) NOT NULL,
+    telefone        VARCHAR(15) UNIQUE,
+    email           VARCHAR(100) UNIQUE,
+    endereco        VARCHAR(200),
+    data_cadastro   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS categorias (
+    id              SERIAL PRIMARY KEY,
+    nome            VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS produtos (
+    id              SERIAL PRIMARY KEY,
+    categoria_id    INTEGER NOT NULL REFERENCES categorias(id) ON DELETE RESTRICT,
+    nome            VARCHAR(80) NOT NULL,
+    descricao       TEXT,
+    preco           DECIMAL(10,2) NOT NULL CHECK (preco > 0),
+    disponivel      BOOLEAN DEFAULT TRUE,
+    imagem_url      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id              SERIAL PRIMARY KEY,
+    cliente_id      INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
+    data_pedido     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo            VARCHAR(20) DEFAULT 'consumo_local' CHECK (tipo IN ('consumo_local', 'retirada')),
+    status          VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'em_preparo', 'pronto', 'entregue', 'cancelado')),
+    observacao      TEXT,
+    total           DECIMAL(10,2) DEFAULT 0.00 CHECK (total >= 0)
+);
+
+CREATE TABLE IF NOT EXISTS itens_pedido (
+    id              SERIAL PRIMARY KEY,
+    pedido_id       INTEGER NOT NULL REFERENCES pedidos(id) ON DELETE CASCADE,
+    produto_id      INTEGER NOT NULL REFERENCES produtos(id) ON DELETE RESTRICT,
+    quantidade      INTEGER NOT NULL DEFAULT 1 CHECK (quantidade > 0),
+    preco_unitario  DECIMAL(10,2) NOT NULL CHECK (preco_unitario > 0),
+    observacao_item TEXT
+);
+
+CREATE TABLE IF NOT EXISTS pagamentos (
+    id              SERIAL PRIMARY KEY,
+    pedido_id       INTEGER NOT NULL UNIQUE REFERENCES pedidos(id) ON DELETE CASCADE,
+    metodo          VARCHAR(20) NOT NULL CHECK (metodo IN ('dinheiro', 'pix', 'cartao_credito', 'cartao_debito')),
+    valor           DECIMAL(10,2) NOT NULL CHECK (valor > 0),
+    data_pagamento  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status          VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'pago', 'cancelado'))
+);
+
+-- Índices recomendados
+CREATE INDEX IF NOT EXISTS idx_pedidos_status ON pedidos(status);
+CREATE INDEX IF NOT EXISTS idx_pedidos_cliente ON pedidos(cliente_id);
+CREATE INDEX IF NOT EXISTS idx_itens_pedido ON itens_pedido(pedido_id);
+
+COMMENT ON TABLE pedidos IS 'Pedidos da lanchonete';</code></pre>
+        </div>
+      </div>
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const copyButton = document.getElementById('copy-button');
+        const copyText = document.getElementById('copy-text');
+        const sqlCode = document.getElementById('sql-code');
+
+        if (copyButton && sqlCode) {
+          copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(sqlCode.textContent).then(() => {
+              copyText.textContent = 'Copiado!';
+              copyButton.classList.add('bg-tertiary', 'text-on-tertiary');
+
+              setTimeout(() => {
+                copyText.textContent = 'Copiar';
+                copyButton.classList.remove('bg-tertiary', 'text-on-tertiary');
+              }, 2000);
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

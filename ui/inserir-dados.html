@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Inserir Dados - VNW Lanchonete</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "tertiary": "#005020",
+              "primary-container": "#1d4ed8",
+              "surface-container-low": "#f2f4f6",
+              "inverse-on-surface": "#eff1f3",
+              "surface-dim": "#d8dadc",
+              "on-tertiary-fixed": "#002109",
+              "on-primary": "#ffffff",
+              "background": "#f7f9fb",
+              "secondary-fixed": "#d3e4fe",
+              "on-tertiary-container": "#5cf083",
+              "on-secondary-fixed": "#0b1c30",
+              "surface-bright": "#f7f9fb",
+              "outline-variant": "#c4c5d7",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed": "#dce1ff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eceef0",
+              "outline": "#747686",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#434655",
+              "secondary-container": "#d0e1fb",
+              "on-error": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#b7c4ff",
+              "surface": "#f7f9fb",
+              "on-surface": "#191c1e",
+              "tertiary-container": "#006b2d",
+              "on-secondary-fixed-variant": "#38485d",
+              "on-background": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#cad3ff",
+              "on-secondary-container": "#54647a",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#b7c8e1",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#6bff8f",
+              "on-tertiary-fixed-variant": "#005321",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-fixed": "#001551",
+              "tertiary-fixed-dim": "#4ae176",
+              "secondary": "#505f76",
+              "on-primary-fixed-variant": "#0039b5",
+              "primary": "#0037b0",
+              "surface-tint": "#2151da",
+              "primary-fixed-dim": "#b7c4ff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-surface font-body min-h-screen">
+    <!-- TopAppBar -->
+    <header
+      class="bg-white dark:bg-[#191c1e] flex justify-between items-center px-6 py-4 w-full z-50 fixed top-0 left-0"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="text-2xl font-black text-[#0037b0] dark:text-[#1d4ed8] font-headline"
+          >Simulador</span
+        >
+      </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#f2f4f6] dark:bg-[#191c1e] flex-col p-4 z-40 mt-16 rounded-r-xl"
+    >
+      <div class="mb-8 px-2">
+        <h2 class="text-xl font-bold text-[#0037b0] font-headline">
+          VNW-Lanchonete
+        </h2>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="index.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">smartphone</span>
+          <span class="font-medium">Simular Ambiente</span>
+        </a>
+        <a href="diagrama.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">schema</span>
+          <span class="font-medium">Diagrama</span>
+        </a>
+        <a href="criar-database.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">database</span>
+          <span class="font-medium">Criar Database</span>
+        </a>
+        <div class="flex items-center gap-3 bg-[#0037b0] text-white rounded-xl p-3 active:scale-95 duration-200 cursor-pointer">
+          <span class="material-symbols-outlined">file_upload</span>
+          <span class="font-medium">Inserir Dados</span>
+        </div>
+        <a href="querys.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">query_stats</span>
+          <span class="font-medium">Querys</span>
+        </a>
+      </nav>
+    </aside>
+    <main class="pt-24 pb-20 lg:ml-64 px-4 md:px-8 max-w-7xl mx-auto">
+      <h1 class="text-3xl font-bold font-headline mb-4">Inserção de Dados de Exemplo</h1>
+      <p class="text-on-surface-variant mb-8">Após a criação das tabelas, este script é usado para popular o banco com dados iniciais, como categorias, produtos, clientes e alguns pedidos de exemplo.</p>
+      
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+        <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+          <h2 class="font-bold text-lg font-headline">Script de Inserção (PostgreSQL)</h2>
+          <button id="copy-button" class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+            <span class="material-symbols-outlined text-sm">content_copy</span>
+            <span id="copy-text">Copiar</span>
+          </button>
+        </div>
+        <div class="p-4">
+          <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="sql-code" class="language-sql">-- =============================================
+-- DADOS DE EXEMPLO - Lanchonete "Sabor do Bairro"
+-- Execute APÓS criar as tabelas
+-- =============================================
+
+-- 1. Categorias
+INSERT INTO categorias (nome) VALUES
+('Lanches'),
+('Bebidas'),
+('Sobremesas'),
+('Acompanhamentos')
+ON CONFLICT (nome) DO NOTHING;
+
+-- 2. Produtos
+INSERT INTO produtos (categoria_id, nome, descricao, preco, disponivel) VALUES
+(1, 'X-Tudo', 'Hambúrguer com carne 150g, queijo, presunto, bacon, alface, tomate e maionese', 18.90, true),
+(1, 'X-Bacon', 'Hambúrguer com carne 150g, queijo cheddar e bacon crocante', 16.50, true),
+(1, 'X-Salada', 'Hambúrguer com carne, queijo, alface, tomate e molho especial', 14.90, true),
+(1, 'Hot Dog Completo', 'Salsicha, milho, batata palha, queijo, molho especial', 12.00, true),
+
+(2, 'Coca-Cola 350ml', 'Refrigerante lata', 6.00, true),
+(2, 'Guaraná 350ml', 'Refrigerante lata', 6.00, true),
+(2, 'Suco de Laranja Natural', '300ml - Feito na hora', 8.50, true),
+(2, 'Água Mineral 500ml', '', 4.00, true),
+
+(3, 'Brigadeiro', 'Brigadeiro tradicional com granulado', 4.00, true),
+(3, 'Pudim de Leite', 'Fatia individual', 7.50, true),
+(3, 'Sorvete de Chocolate', 'Bola 100ml', 6.00, true),
+
+(4, 'Batata Frita Pequena', 'Porção 150g', 8.90, true),
+(4, 'Batata Frita Grande', 'Porção 300g', 14.90, true),
+(4, 'Onion Rings', 'Porção com 8 unidades', 11.50, true)
+ON CONFLICT DO NOTHING;
+
+-- 3. Clientes
+INSERT INTO clientes (nome, telefone, email, endereco) VALUES
+('João Silva', '(21) 98765-4321', 'joao.silva@email.com', 'Rua das Flores, 123 - Ap 202'),
+('Maria Oliveira', '(21) 99876-5432', 'maria.oliveira@email.com', 'Av. Brasil, 456 - Casa'),
+('Pedro Santos', '(21) 97654-3210', NULL, 'Rua do Comércio, 789'),
+('Ana Costa', '(21) 95555-1234', 'ana.costa@email.com', 'Rua das Palmeiras, 321 - Ap 101')
+ON CONFLICT DO NOTHING;
+
+-- 4. Pedidos (exemplos)
+INSERT INTO pedidos (cliente_id, tipo, status, observacao, total) VALUES
+(1, 'consumo_local', 'pronto', 'Sem cebola no X-Tudo', 24.90),
+(NULL, 'retirada', 'em_preparo', 'Retirada em 20 minutos', 41.40),
+(2, 'consumo_local', 'pendente', NULL, 18.90),
+(3, 'retirada', 'pronto', 'Pedido para viagem', 33.00),
+(1, 'consumo_local', 'entregue', NULL, 29.50);
+
+-- 5. Itens dos Pedidos
+INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario, observacao_item) VALUES
+(1, 1, 1, 18.90, 'Sem cebola'),           -- X-Tudo
+(1, 5, 1, 6.00, NULL),                    -- Coca-Cola
+
+(2, 2, 2, 16.50, NULL),                   -- 2x X-Bacon
+(2, 13, 1, 8.90, NULL),                   -- Batata Frita Pequena
+
+(3, 3, 1, 14.90, NULL),                   -- X-Salada
+(3, 7, 1, 4.00, NULL),                    -- Água Mineral
+
+(4, 4, 1, 12.00, NULL),                   -- Hot Dog
+(4, 6, 2, 6.00, NULL),                    -- 2x Guaraná
+(4, 10, 1, 7.50, 'Com calda extra'),      -- Pudim
+
+(5, 1, 1, 18.90, NULL),                   -- X-Tudo
+(5, 14, 1, 10.60, NULL);                  -- Onion Rings  (ajustado para total)
+
+-- 6. Pagamentos
+INSERT INTO pagamentos (pedido_id, metodo, valor, status) VALUES
+(1, 'pix', 24.90, 'pago'),
+(3, 'dinheiro', 18.90, 'pendente'),
+(4, 'pix', 33.00, 'pago'),
+(5, 'cartao_credito', 29.50, 'pago');
+
+-- 7. Mini Report para ver se os dados estão inseridos
+SELECT 'clientes' as tabela, count(*) as quantidade FROM clientes
+UNION ALL
+SELECT 'categorias', count(*) FROM categorias
+UNION ALL
+SELECT 'produtos', count(*) FROM produtos
+UNION ALL
+SELECT 'pedidos', count(*) FROM pedidos;</code></pre>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const copyButton = document.getElementById('copy-button');
+        const copyText = document.getElementById('copy-text');
+        const sqlCode = document.getElementById('sql-code');
+
+        copyButton.addEventListener('click', () => {
+          navigator.clipboard.writeText(sqlCode.textContent).then(() => {
+            copyText.textContent = 'Copiado!';
+            copyButton.classList.add('bg-tertiary', 'text-on-tertiary');
+
+            setTimeout(() => {
+              copyText.textContent = 'Copiar';
+              copyButton.classList.remove('bg-tertiary', 'text-on-tertiary');
+            }, 2000);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

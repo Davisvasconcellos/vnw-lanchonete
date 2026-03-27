@@ -1,0 +1,153 @@
+-- =============================================
+-- CRIAÇÃO DAS TABELAS - Lanchonete Sabor do Bairro
+-- Execute APÓS conceder as permissões acima
+-- =============================================
+
+CREATE TABLE IF NOT EXISTS clientes (
+    id              SERIAL PRIMARY KEY,
+    nome            VARCHAR(100) NOT NULL,
+    telefone        VARCHAR(15) UNIQUE,
+    email           VARCHAR(100) UNIQUE,
+    endereco        VARCHAR(200),
+    data_cadastro   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS categorias (
+    id              SERIAL PRIMARY KEY,
+    nome            VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS produtos (
+    id              SERIAL PRIMARY KEY,
+    categoria_id    INTEGER NOT NULL REFERENCES categorias(id) ON DELETE RESTRICT,
+    nome            VARCHAR(80) NOT NULL,
+    descricao       TEXT,
+    preco           DECIMAL(10,2) NOT NULL CHECK (preco > 0),
+    disponivel      BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id              SERIAL PRIMARY KEY,
+    cliente_id      INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
+    data_pedido     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo            VARCHAR(20) DEFAULT 'consumo_local' CHECK (tipo IN ('consumo_local', 'retirada')),
+    status          VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'em_preparo', 'pronto', 'entregue', 'cancelado')),
+    observacao      TEXT,
+    total           DECIMAL(10,2) DEFAULT 0.00 CHECK (total >= 0)
+);
+
+CREATE TABLE IF NOT EXISTS itens_pedido (
+    id              SERIAL PRIMARY KEY,
+    pedido_id       INTEGER NOT NULL REFERENCES pedidos(id) ON DELETE CASCADE,
+    produto_id      INTEGER NOT NULL REFERENCES produtos(id) ON DELETE RESTRICT,
+    quantidade      INTEGER NOT NULL DEFAULT 1 CHECK (quantidade > 0),
+    preco_unitario  DECIMAL(10,2) NOT NULL CHECK (preco_unitario > 0),
+    observacao_item TEXT
+);
+
+CREATE TABLE IF NOT EXISTS pagamentos (
+    id              SERIAL PRIMARY KEY,
+    pedido_id       INTEGER NOT NULL UNIQUE REFERENCES pedidos(id) ON DELETE CASCADE,
+    metodo          VARCHAR(20) NOT NULL CHECK (metodo IN ('dinheiro', 'pix', 'cartao_credito', 'cartao_debito')),
+    valor           DECIMAL(10,2) NOT NULL CHECK (valor > 0),
+    data_pagamento  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status          VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'pago', 'cancelado'))
+);
+
+-- Índices recomendados
+CREATE INDEX IF NOT EXISTS idx_pedidos_status ON pedidos(status);
+CREATE INDEX IF NOT EXISTS idx_pedidos_cliente ON pedidos(cliente_id);
+CREATE INDEX IF NOT EXISTS idx_itens_pedido ON itens_pedido(pedido_id);
+
+COMMENT ON TABLE pedidos IS 'Pedidos da lanchonete';
+
+
+
+-- =============================================
+-- DADOS DE EXEMPLO - Lanchonete "Sabor do Bairro"
+-- Execute APÓS criar as tabelas
+-- =============================================
+
+-- 1. Categorias
+INSERT INTO categorias (nome) VALUES
+('Lanches'),
+('Bebidas'),
+('Sobremesas'),
+('Acompanhamentos')
+ON CONFLICT (nome) DO NOTHING;
+
+-- 2. Produtos
+INSERT INTO produtos (categoria_id, nome, descricao, preco, disponivel) VALUES
+(1, 'X-Tudo', 'Hambúrguer com carne 150g, queijo, presunto, bacon, alface, tomate e maionese', 18.90, true),
+(1, 'X-Bacon', 'Hambúrguer com carne 150g, queijo cheddar e bacon crocante', 16.50, true),
+(1, 'X-Salada', 'Hambúrguer com carne, queijo, alface, tomate e molho especial', 14.90, true),
+(1, 'Hot Dog Completo', 'Salsicha, milho, batata palha, queijo, molho especial', 12.00, true),
+
+(2, 'Coca-Cola 350ml', 'Refrigerante lata', 6.00, true),
+(2, 'Guaraná 350ml', 'Refrigerante lata', 6.00, true),
+(2, 'Suco de Laranja Natural', '300ml - Feito na hora', 8.50, true),
+(2, 'Água Mineral 500ml', '', 4.00, true),
+
+(3, 'Brigadeiro', 'Brigadeiro tradicional com granulado', 4.00, true),
+(3, 'Pudim de Leite', 'Fatia individual', 7.50, true),
+(3, 'Sorvete de Chocolate', 'Bola 100ml', 6.00, true),
+
+(4, 'Batata Frita Pequena', 'Porção 150g', 8.90, true),
+(4, 'Batata Frita Grande', 'Porção 300g', 14.90, true),
+(4, 'Onion Rings', 'Porção com 8 unidades', 11.50, true)
+ON CONFLICT DO NOTHING;
+
+-- 3. Clientes
+INSERT INTO clientes (nome, telefone, email, endereco) VALUES
+('João Silva', '(21) 98765-4321', 'joao.silva@email.com', 'Rua das Flores, 123 - Ap 202'),
+('Maria Oliveira', '(21) 99876-5432', 'maria.oliveira@email.com', 'Av. Brasil, 456 - Casa'),
+('Pedro Santos', '(21) 97654-3210', NULL, 'Rua do Comércio, 789'),
+('Ana Costa', '(21) 95555-1234', 'ana.costa@email.com', 'Rua das Palmeiras, 321 - Ap 101')
+ON CONFLICT DO NOTHING;
+
+-- 4. Pedidos (exemplos)
+INSERT INTO pedidos (cliente_id, tipo, status, observacao, total) VALUES
+(1, 'consumo_local', 'pronto', 'Sem cebola no X-Tudo', 24.90),
+(NULL, 'retirada', 'em_preparo', 'Retirada em 20 minutos', 41.40),
+(2, 'consumo_local', 'pendente', NULL, 18.90),
+(3, 'retirada', 'pronto', 'Pedido para viagem', 33.00),
+(1, 'consumo_local', 'entregue', NULL, 29.50);
+
+-- 5. Itens dos Pedidos
+INSERT INTO itens_pedido (pedido_id, produto_id, quantidade, preco_unitario, observacao_item) VALUES
+(1, 1, 1, 18.90, 'Sem cebola'),           -- X-Tudo
+(1, 5, 1, 6.00, NULL),                    -- Coca-Cola
+
+(2, 2, 2, 16.50, NULL),                   -- 2x X-Bacon
+(2, 13, 1, 8.90, NULL),                   -- Batata Frita Pequena
+
+(3, 3, 1, 14.90, NULL),                   -- X-Salada
+(3, 7, 1, 4.00, NULL),                    -- Água Mineral
+
+(4, 4, 1, 12.00, NULL),                   -- Hot Dog
+(4, 6, 2, 6.00, NULL),                    -- 2x Guaraná
+(4, 10, 1, 7.50, 'Com calda extra'),      -- Pudim
+
+(5, 1, 1, 18.90, NULL),                   -- X-Tudo
+(5, 14, 1, 10.60, NULL);                  -- Onion Rings  (ajustado para total)
+
+-- 6. Pagamentos
+INSERT INTO pagamentos (pedido_id, metodo, valor, status) VALUES
+(1, 'pix', 24.90, 'pago'),
+(3, 'dinheiro', 18.90, 'pendente'),
+(4, 'pix', 33.00, 'pago'),
+(5, 'cartao_credito', 29.50, 'pago');
+
+
+
+
+
+
+-- 7. Mini Report para ver se os dados estão inseridos
+SELECT 'clientes' as tabela, count(*) as quantidade FROM clientes
+UNION ALL
+SELECT 'categorias', count(*) FROM categorias
+UNION ALL
+SELECT 'produtos', count(*) FROM produtos
+UNION ALL
+SELECT 'pedidos', count(*) FROM pedidos;

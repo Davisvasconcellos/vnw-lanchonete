@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Querys - VNW Lanchonete</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "tertiary": "#005020",
+              "primary-container": "#1d4ed8",
+              "surface-container-low": "#f2f4f6",
+              "inverse-on-surface": "#eff1f3",
+              "surface-dim": "#d8dadc",
+              "on-tertiary-fixed": "#002109",
+              "on-primary": "#ffffff",
+              "background": "#f7f9fb",
+              "secondary-fixed": "#d3e4fe",
+              "on-tertiary-container": "#5cf083",
+              "on-secondary-fixed": "#0b1c30",
+              "surface-bright": "#f7f9fb",
+              "outline-variant": "#c4c5d7",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed": "#dce1ff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eceef0",
+              "outline": "#747686",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#434655",
+              "secondary-container": "#d0e1fb",
+              "on-error": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#b7c4ff",
+              "surface": "#f7f9fb",
+              "on-surface": "#191c1e",
+              "tertiary-container": "#006b2d",
+              "on-secondary-fixed-variant": "#38485d",
+              "on-background": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#cad3ff",
+              "on-secondary-container": "#54647a",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#b7c8e1",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#6bff8f",
+              "on-tertiary-fixed-variant": "#005321",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-fixed": "#001551",
+              "tertiary-fixed-dim": "#4ae176",
+              "secondary": "#505f76",
+              "on-primary-fixed-variant": "#0039b5",
+              "primary": "#0037b0",
+              "surface-tint": "#2151da",
+              "primary-fixed-dim": "#b7c4ff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      .accordion-content.active {
+        max-height: 1000px; /* Valor alto para garantir que o conteúdo caiba */
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body min-h-screen">
+    <!-- TopAppBar -->
+    <header
+      class="bg-white dark:bg-[#191c1e] flex justify-between items-center px-6 py-4 w-full z-50 fixed top-0 left-0"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="text-2xl font-black text-[#0037b0] dark:text-[#1d4ed8] font-headline"
+          >Simulador</span
+        >
+      </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#f2f4f6] dark:bg-[#191c1e] flex-col p-4 z-40 mt-16 rounded-r-xl"
+    >
+      <div class="mb-8 px-2">
+        <h2 class="text-xl font-bold text-[#0037b0] font-headline">
+          VNW-Lanchonete
+        </h2>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="index.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">smartphone</span>
+          <span class="font-medium">Simular Ambiente</span>
+        </a>
+        <a href="diagrama.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">schema</span>
+          <span class="font-medium">Diagrama</span>
+        </a>
+        <a href="criar-database.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">database</span>
+          <span class="font-medium">Criar Database</span>
+        </a>
+        <a href="inserir-dados.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">file_upload</span>
+          <span class="font-medium">Inserir Dados</span>
+        </a>
+        <div class="flex items-center gap-3 bg-[#0037b0] text-white rounded-xl p-3 active:scale-95 duration-200 cursor-pointer">
+          <span class="material-symbols-outlined">query_stats</span>
+          <span class="font-medium">Querys</span>
+        </div>
+      </nav>
+    </aside>
+    <main class="pt-24 pb-20 lg:ml-64 px-4 md:px-8"> <!-- Garante que não há max-width aqui -->
+      <h1 class="text-3xl font-bold font-headline mb-8">Endpoints e Querys da API</h1>
+
+      <div class="grid grid-cols-10 gap-8"> <!-- Total de 10 colunas para 70/30 -->
+        <!-- Coluna Esquerda: Lista de Endpoints -->
+        <div class="col-span-7"> <!-- Ocupa 7 de 10 colunas (70%) -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold font-headline mb-4">Endpoints Principais (GET)</h2>
+            <div class="space-y-6">
+              <!-- GET /produtos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">GET /produtos</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/produtos">
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-produtos">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-produtos" class="language-sql">SELECT
+  p.id,
+  c.nome AS categoria,
+  p.nome,
+  p.descricao,
+  p.preco,
+  p.disponivel,
+  p.imagem_url
+FROM produtos p
+JOIN categorias c ON p.categoria_id = c.id
+ORDER BY c.nome, p.nome;</code></pre>
+                </div>
+              </div>
+
+              <!-- GET /clientes -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">GET /clientes</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/clientes">
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-clientes">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-clientes" class="language-sql">SELECT id, nome, telefone, email, endereco, data_cadastro
+FROM clientes
+ORDER BY nome;</code></pre>
+                </div>
+              </div>
+
+              <!-- GET /pedidos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">GET /pedidos (com itens agregados)</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/pedidos">
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-pedidos">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-pedidos" class="language-sql">SELECT
+  p.id,
+  p.data_pedido,
+  COALESCE(c.nome, 'Cliente Balcão') AS cliente,
+  p.tipo,
+  p.status,
+  p.total,
+  STRING_AGG(pr.nome || ' (x' || ip.quantidade || ')', ', ') AS itens
+FROM pedidos p
+LEFT JOIN clientes c ON p.cliente_id = c.id
+LEFT JOIN itens_pedido ip ON p.id = ip.pedido_id
+LEFT JOIN produtos pr ON ip.produto_id = pr.id
+GROUP BY p.id, c.nome
+ORDER BY p.data_pedido DESC;</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold font-headline mb-4">Endpoints de Consulta (GET - Acordeão)</h2>
+            <div class="space-y-4">
+              <!-- GET /consultas/pedidos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/pedidos (Listar todos os pedidos com nome do cliente)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/pedidos">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-consultas-pedidos">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-consultas-pedidos" class="language-sql">SELECT
+  p.id AS pedido_id,
+  p.data_pedido,
+  COALESCE(c.nome, 'Cliente Balcão') AS cliente,
+  p.tipo,
+  p.status,
+  p.total
+FROM pedidos p
+LEFT JOIN clientes c ON p.cliente_id = c.id
+ORDER BY p.data_pedido DESC;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/historico-cliente/:cliente_id -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/historico-cliente/:cliente_id (Histórico de pedidos de um cliente)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/historico-cliente/:cliente_id">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-historico-cliente">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-historico-cliente" class="language-sql">SELECT
+  p.id,
+  p.data_pedido,
+  p.status,
+  p.total,
+  STRING_AGG(pr.nome, ', ') AS itens
+FROM pedidos p
+LEFT JOIN itens_pedido ip ON p.id = ip.pedido_id
+LEFT JOIN produtos pr ON ip.produto_id = pr.id
+WHERE p.cliente_id = $1
+GROUP BY p.id
+ORDER BY p.data_pedido DESC;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/pedido-resumido/:pedido_id -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/pedido-resumido/:pedido_id (Detalhe resumido de um pedido)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/pedido-resumido/:pedido_id">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-pedido-resumido">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-pedido-resumido" class="language-sql">SELECT
+  p.id AS pedido_id,
+  p.data_pedido,
+  COALESCE(c.nome, 'Cliente Balcão') AS cliente_nome,
+  p.tipo,
+  p.status,
+  p.observacao,
+  p.total,
+  STRING_AGG(pr.nome || ' (x' || ip.quantidade || ' - R$' || ip.preco_unitario || ')', ', ') AS itens
+FROM pedidos p
+LEFT JOIN clientes c ON p.cliente_id = c.id
+LEFT JOIN itens_pedido ip ON p.id = ip.pedido_id
+LEFT JOIN produtos pr ON ip.produto_id = pr.id
+WHERE p.id = $1
+GROUP BY p.id, c.nome;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/pedido-detalhe/:pedido_id -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/pedido-detalhe/:pedido_id (Detalhe completo de um pedido por item)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/pedido-detalhe/:pedido_id">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-pedido-detalhe">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-pedido-detalhe" class="language-sql">SELECT
+  pr.nome AS produto,
+  ip.quantidade,
+  ip.preco_unitario,
+  (ip.quantidade * ip.preco_unitario) AS subtotal
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+WHERE ip.pedido_id = $1;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/vendas-por-status -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/vendas-por-status (Total de vendas por status)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/vendas-por-status">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-vendas-por-status">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-vendas-por-status" class="language-sql">SELECT
+  status,
+  COUNT(*) AS quantidade,
+  SUM(total) AS valor_total
+FROM pedidos
+GROUP BY status
+ORDER BY
+  CASE status
+      WHEN 'pendente' THEN 1
+      WHEN 'em_preparo' THEN 2
+      WHEN 'pronto' THEN 3
+      WHEN 'entregue' THEN 4
+      WHEN 'cancelado' THEN 5
+  END;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/produtos-mais-vendidos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/produtos-mais-vendidos (Produtos mais vendidos)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/produtos-mais-vendidos">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-produtos-mais-vendidos">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-produtos-mais-vendidos" class="language-sql">SELECT
+  pr.nome,
+  pr.imagem_url,
+  SUM(ip.quantidade) AS quantidade_vendida,
+  SUM(ip.quantidade * ip.preco_unitario) AS valor_total_vendido
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+GROUP BY pr.nome
+ORDER BY quantidade_vendida DESC;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/vendas-hoje -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/vendas-hoje (Vendas do dia atual)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/vendas-hoje">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-vendas-hoje">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-vendas-hoje" class="language-sql">SELECT
+  COUNT(*) AS total_pedidos,
+  SUM(total) AS faturamento_dia
+FROM pedidos
+WHERE DATE(data_pedido) = CURRENT_DATE;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/top10-produtos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/top10-produtos (Top 10 produtos mais vendidos)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/top10-produtos">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-top10-produtos">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-top10-produtos" class="language-sql">SELECT
+  pr.nome,
+  SUM(ip.quantidade) AS quantidade_vendida,
+  SUM(ip.quantidade * ip.preco_unitario) AS valor_total
+FROM itens_pedido ip
+JOIN produtos pr ON ip.produto_id = pr.id
+GROUP BY pr.nome
+ORDER BY quantidade_vendida DESC
+LIMIT 10;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/produtos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/produtos (Listar todos os produtos com categoria)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/produtos">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-consultas-produtos">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-consultas-produtos" class="language-sql">SELECT
+  p.id,
+  c.nome AS categoria,
+  p.nome,
+  p.descricao,
+  p.preco,
+  p.disponivel,
+  p.imagem_url
+FROM produtos p
+JOIN categorias c ON p.categoria_id = c.id
+ORDER BY c.nome, p.nome;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GET /consultas/clientes -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <button class="accordion-header w-full p-4 flex justify-between items-center font-bold text-lg font-headline hover:bg-surface-container-high transition-colors">
+                  <span>GET /consultas/clientes (Listar todos os clientes)</span>
+                  <span class="material-symbols-outlined accordion-icon">expand_more</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="p-4 border-t border-outline-variant/20 flex justify-between items-center">
+                    <h4 class="font-bold text-base font-headline">Query SQL</h4>
+                    <div class="flex items-center gap-2">
+                      <button class="execute-button flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-endpoint="/consultas/clientes">
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                        <span>Executar</span>
+                      </button>
+                      <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-consultas-clientes">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="copy-text">Copiar</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-consultas-clientes" class="language-sql">SELECT
+  id,
+  nome,
+  telefone,
+  email,
+  endereco,
+  data_cadastro
+FROM clientes
+ORDER BY nome;</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold font-headline mb-4">Endpoints de Escrita (POST/PATCH)</h2>
+            <div class="space-y-6">
+              <!-- POST /clientes -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">POST /clientes (Cadastrar Novo Cliente)</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold opacity-50 cursor-not-allowed" disabled>
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-post-clientes">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-post-clientes" class="language-sql">INSERT INTO clientes (nome, telefone, email, endereco)
+VALUES ($1, $2, $3, $4)
+RETURNING *;</code></pre>
+                </div>
+              </div>
+
+              <!-- POST /produtos -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">POST /produtos (Cadastrar Novo Produto)</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold opacity-50 cursor-not-allowed" disabled>
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-post-produtos">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-post-produtos" class="language-sql">INSERT INTO produtos (categoria_id, nome, descricao, preco, disponivel)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING *;</code></pre>
+                </div>
+              </div>
+
+              <!-- PATCH /pedidos/:id/status -->
+              <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+                <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+                  <h3 class="font-bold text-lg font-headline">PATCH /pedidos/:id/status (Atualizar Status do Pedido)</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="flex items-center gap-2 bg-surface-container-high text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold opacity-50 cursor-not-allowed" disabled>
+                      <span class="material-symbols-outlined text-sm">play_arrow</span>
+                      <span>Executar</span>
+                    </button>
+                    <button class="copy-button flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" data-target="query-patch-pedidos-status">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                      <span class="copy-text">Copiar</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="query-patch-pedidos-status" class="language-sql">UPDATE pedidos
+SET status = $1
+WHERE id = $2
+RETURNING *;</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Coluna Direita: Resultado -->
+        <div class="col-span-3"> <!-- Ocupa 3 de 10 colunas (30%) -->
+          <div class="sticky top-24 h-[calc(100vh-7.5rem)]"> <!-- Painel fixo com altura calculada -->
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm h-full flex flex-col">
+              <div class="p-4 border-b border-outline-variant/20">
+                <h2 class="font-bold text-lg font-headline">Resultado</h2>
+              </div>
+              <div id="result-box" class="p-4 flex-1 overflow-auto">
+                <div class="w-full h-full rounded-lg flex items-center justify-center">
+                  <p class="text-on-surface-variant text-sm">Clique em "Executar" para ver o resultado aqui.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const API_BASE_URL = 'http://localhost:3000';
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+          header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+
+            // Close all other accordions
+            accordionHeaders.forEach(otherHeader => {
+              if (otherHeader !== header) {
+                otherHeader.nextElementSibling.classList.remove('active');
+                otherHeader.querySelector('.accordion-icon').textContent = 'expand_more';
+              }
+            });
+
+            // Toggle current accordion
+            content.classList.toggle('active');
+            if (content.classList.contains('active')) {
+              icon.textContent = 'expand_less';
+            } else {
+              icon.textContent = 'expand_more';
+            }
+          });
+        });
+
+        // Copy button functionality
+        const copyButtons = document.querySelectorAll('.copy-button');
+        copyButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const targetId = button.dataset.target;
+            const codeBlock = document.getElementById(targetId);
+            const copyTextSpan = button.querySelector('.copy-text');
+
+            if (codeBlock) {
+              navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                copyTextSpan.textContent = 'Copiado!';
+                button.classList.add('bg-tertiary', 'text-on-tertiary');
+
+                setTimeout(() => {
+                  copyTextSpan.textContent = 'Copiar';
+                  button.classList.remove('bg-tertiary', 'text-on-tertiary');
+                }, 2000);
+              }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+                copyTextSpan.textContent = 'Erro!';
+              });
+            }
+          });
+        });
+
+        // Execute button functionality
+        const executeButtons = document.querySelectorAll('.execute-button');
+        const resultBox = document.getElementById('result-box');
+
+        executeButtons.forEach(button => {
+          button.addEventListener('click', async () => {
+            let endpoint = button.dataset.endpoint;
+            const method = button.dataset.method || 'GET';
+
+            resultBox.innerHTML = `<div class="w-full h-full rounded-lg flex items-center justify-center"><p class="text-on-surface-variant text-sm">Carregando...</p></div>`;
+
+            // Handle params in URL
+            if (endpoint.includes(':')) {
+              const paramMatch = endpoint.match(/:(\w+)/);
+              if (paramMatch) {
+                const paramName = paramMatch[1];
+                const paramValue = prompt(`Por favor, insira o valor para "${paramName}":`);
+                if (paramValue === null || paramValue.trim() === '') {
+                  resultBox.innerHTML = `<div class="w-full h-full rounded-lg flex items-center justify-center"><p class="text-on-surface-variant text-sm">Execução cancelada. Parâmetro necessário.</p></div>`;
+                  return;
+                }
+                endpoint = endpoint.replace(paramMatch[0], paramValue);
+              }
+            }
+
+            const fetchOptions = {
+              method: method,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            };
+
+            // Handle POST/PATCH body
+            if (method === 'POST' || method === 'PATCH') {
+              let body = {};
+              try {
+                if (endpoint.startsWith('/clientes')) {
+                  body = JSON.parse(prompt('Insira o JSON para o novo cliente:', '{"nome": "Novo Cliente", "email": "novo@email.com"}'));
+                } else if (endpoint.startsWith('/produtos')) {
+                  body = JSON.parse(prompt('Insira o JSON para o novo produto:', '{"categoria_id": 1, "nome": "Novo Produto", "preco": "9.99"}'));
+                } else if (endpoint.includes('/status')) {
+                  body = JSON.parse(prompt('Insira o JSON para o novo status:', '{"status": "em_preparo"}'));
+                }
+                if (!body) { // User cancelled prompt
+                   resultBox.innerHTML = `<div class="w-full h-full rounded-lg flex items-center justify-center"><p class="text-on-surface-variant text-sm">Execução cancelada.</p></div>`;
+                   return;
+                }
+                fetchOptions.body = JSON.stringify(body);
+              } catch (e) {
+                resultBox.innerHTML = `<pre class="text-red-500">Erro de JSON: ${e.message}</pre>`;
+                return;
+              }
+            }
+
+            try {
+              const response = await fetch(`${API_BASE_URL}${endpoint}`, fetchOptions);
+              const data = await response.json();
+
+              let statusColor = response.ok ? 'text-green-500' : 'text-red-500';
+
+              const resultHtml = `
+                <div class="flex justify-between items-center mb-2">
+                  <p class="text-sm font-bold">Status: <span class="${statusColor}">${response.status} ${response.statusText}</span></p>
+                  <p class="text-xs text-on-surface-variant">${method} ${endpoint}</p>
+                </div>
+                <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm w-full h-full"><code class="language-json">${JSON.stringify(data, null, 2)}</code></pre>
+              `;
+              resultBox.innerHTML = resultHtml;
+
+            } catch (error) {
+              const errorHtml = `
+                <div class="flex justify-between items-center mb-2">
+                  <p class="text-sm font-bold text-red-500">Erro na Requisição</p>
+                  <p class="text-xs text-on-surface-variant">${method} ${endpoint}</p>
+                </div>
+                <pre class="bg-red-500/10 text-red-500 p-4 rounded-lg overflow-x-auto text-sm w-full h-full">${error.message}\n\nVerifique se a API está rodando em ${API_BASE_URL} e se o endpoint está correto.</pre>
+              `;
+              resultBox.innerHTML = errorHtml;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

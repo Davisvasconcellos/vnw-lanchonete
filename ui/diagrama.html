@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Diagrama - VNW Lanchonete</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "tertiary": "#005020",
+              "primary-container": "#1d4ed8",
+              "surface-container-low": "#f2f4f6",
+              "inverse-on-surface": "#eff1f3",
+              "surface-dim": "#d8dadc",
+              "on-tertiary-fixed": "#002109",
+              "on-primary": "#ffffff",
+              "background": "#f7f9fb",
+              "secondary-fixed": "#d3e4fe",
+              "on-tertiary-container": "#5cf083",
+              "on-secondary-fixed": "#0b1c30",
+              "surface-bright": "#f7f9fb",
+              "outline-variant": "#c4c5d7",
+              "surface-variant": "#e0e3e5",
+              "primary-fixed": "#dce1ff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eceef0",
+              "outline": "#747686",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#434655",
+              "secondary-container": "#d0e1fb",
+              "on-error": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-primary": "#b7c4ff",
+              "surface": "#f7f9fb",
+              "on-surface": "#191c1e",
+              "tertiary-container": "#006b2d",
+              "on-secondary-fixed-variant": "#38485d",
+              "on-background": "#191c1e",
+              "surface-container-highest": "#e0e3e5",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#cad3ff",
+              "on-secondary-container": "#54647a",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#b7c8e1",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#6bff8f",
+              "on-tertiary-fixed-variant": "#005321",
+              "surface-container-high": "#e6e8ea",
+              "on-primary-fixed": "#001551",
+              "tertiary-fixed-dim": "#4ae176",
+              "secondary": "#505f76",
+              "on-primary-fixed-variant": "#0039b5",
+              "primary": "#0037b0",
+              "surface-tint": "#2151da",
+              "primary-fixed-dim": "#b7c4ff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background text-on-surface font-body min-h-screen">
+    <!-- TopAppBar -->
+    <header
+      class="bg-white dark:bg-[#191c1e] flex justify-between items-center px-6 py-4 w-full z-50 fixed top-0 left-0"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="text-2xl font-black text-[#0037b0] dark:text-[#1d4ed8] font-headline"
+          >Simulador</span
+        >
+      </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-0 h-full w-64 bg-[#f2f4f6] dark:bg-[#191c1e] flex-col p-4 z-40 mt-16 rounded-r-xl"
+    >
+      <div class="mb-8 px-2">
+        <h2 class="text-xl font-bold text-[#0037b0] font-headline">
+          VNW-Lanchonete
+        </h2>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a href="index.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">smartphone</span>
+          <span class="font-medium">Simular Ambiente</span>
+        </a>
+        <div class="flex items-center gap-3 bg-[#0037b0] text-white rounded-xl p-3 active:scale-95 duration-200 cursor-pointer">
+          <span class="material-symbols-outlined">schema</span>
+          <span class="font-medium">Diagrama</span>
+        </div>
+        <a href="criar-database.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">database</span>
+          <span class="font-medium">Criar Database</span>
+        </a>
+        <a href="inserir-dados.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">file_upload</span>
+          <span class="font-medium">Inserir Dados</span>
+        </a>
+        <a href="querys.html" class="flex items-center gap-3 text-[#44474e] dark:text-[#c4c6cf] p-3 hover:bg-[#e6e8ea] dark:hover:bg-[#2e3033] rounded-xl cursor-pointer">
+          <span class="material-symbols-outlined">query_stats</span>
+          <span class="font-medium">Querys</span>
+        </a>
+      </nav>
+    </aside>
+    <main class="pt-24 pb-20 lg:ml-64 px-4 md:px-8 max-w-7xl mx-auto">
+      <h1 class="text-3xl font-bold font-headline mb-8">Diagrama do Banco de Dados</h1>
+      
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold font-headline mb-4">Visualização do Diagrama</h2>
+        <div class="w-full h-[calc(100vh-12rem)] bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+          <iframe src="../assets/pdf/vnw-store-diagram.pdf" class="w-full h-full" style="border: none;"></iframe>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+        <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+          <h2 class="font-bold text-lg font-headline">Código Fonte do Diagrama (DBML)</h2>
+          <button id="copy-button" class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+            <span class="material-symbols-outlined text-sm">content_copy</span>
+            <span id="copy-text">Copiar</span>
+          </button>
+        </div>
+        <div class="p-4">
+          <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="dbml-code" class="language-dbml">// =============================================
+// Lanchonete "Sabor do Bairro" - Diagrama + Dados de Exemplo
+// =============================================
+
+Table clientes {
+  id              serial [pk]
+  nome            varchar(100) [not null]
+  telefone        varchar(15) [unique]
+  email           varchar(100) [unique]
+  endereco        varchar(200)
+  data_cadastro   timestamp [default: `now()`]
+}
+
+Table categorias {
+  id              serial [pk]
+  nome            varchar(50) [not null, unique]
+}
+
+Table produtos {
+  id              serial [pk]
+  categoria_id    int
+  nome            varchar(80) [not null]
+  descricao       text
+  preco           decimal(10,2) [not null]
+  disponivel      boolean [default: true]
+}
+
+Table pedidos {
+  id              serial [pk]
+  cliente_id      int                     // pode ser null (pedido balcão)
+  data_pedido     timestamp [default: `now()`]
+  tipo            varchar(20) [default: 'consumo_local']
+  status          varchar(20) [default: 'pendente']
+  observacao      text
+  total           decimal(10,2) [default: 0]
+}
+
+Table itens_pedido {
+  id              serial [pk]
+  pedido_id       int
+  produto_id      int
+  quantidade      int [not null, default: 1]
+  preco_unitario  decimal(10,2) [not null]
+  observacao_item text
+}
+
+Table pagamentos {
+  id              serial [pk]
+  pedido_id       int [unique]
+  metodo          varchar(20) [not null]
+  valor           decimal(10,2) [not null]
+  data_pagamento  timestamp [default: `now()`]
+  status          varchar(20) [default: 'pendente']
+}
+
+// ==================== RELACIONAMENTOS (Refs) ====================
+
+Ref: produtos.categoria_id > categorias.id           // many-to-one
+
+Ref pedidos_cliente: pedidos.cliente_id > clientes.id     // many-to-one (um cliente pode ter muitos pedidos)
+
+Ref: itens_pedido.pedido_id > pedidos.id             // many-to-one
+Ref: itens_pedido.produto_id > produtos.id           // many-to-one
+
+Ref: pagamentos.pedido_id > pedidos.id               // one-to-one
+</code></pre>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm">
+        <div class="p-4 border-b border-outline-variant/20 flex justify-between items-center">
+          <h2 class="font-bold text-lg font-headline">Melhoria: Adição de Imagens aos Produtos</h2>
+          <button id="copy-alter-button" class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+            <span class="material-symbols-outlined text-sm">content_copy</span>
+            <span id="copy-alter-text">Copiar</span>
+          </button>
+        </div>
+        <div class="p-4">
+          <p class="text-on-surface-variant mb-4">Para enriquecer a apresentação dos produtos no simulador, a tabela <code>produtos</code> foi atualizada para incluir uma coluna <code>imagem_url</code>. Isso permite associar uma URL de imagem a cada produto. O comando abaixo pode ser usado para aplicar essa alteração em um banco de dados existente.</p>
+          <pre class="bg-surface-container-low p-4 rounded-lg overflow-x-auto text-sm"><code id="alter-code" class="language-sql">-- Adiciona a coluna para a URL da imagem na tabela de produtos
+ALTER TABLE produtos ADD COLUMN imagem_url TEXT;
+</code></pre>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-sm p-4">
+        <h2 class="font-bold text-lg font-headline mb-2">Nota sobre Melhorias</h2>
+        <p class="text-on-surface-variant">
+          No script final de criação do banco de dados (disponível na página "Criar Database"), a tabela <code>produtos</code> foi aprimorada com a adição da coluna <code>imagem_url</code> (tipo TEXT). Esta coluna permite armazenar URLs de imagens para os produtos, enriquecendo a apresentação no simulador.
+          Portanto, o script de criação já inclui essa coluna, não sendo necessário um comando <code>ALTER TABLE</code> separado.
+        </p>
+      </div>
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const copyButton = document.getElementById('copy-button');
+        const copyText = document.getElementById('copy-text');
+        const dbmlCode = document.getElementById('dbml-code');
+
+        copyButton.addEventListener('click', () => {
+          navigator.clipboard.writeText(dbmlCode.textContent).then(() => {
+            copyText.textContent = 'Copiado!';
+            copyButton.classList.add('bg-tertiary', 'text-on-tertiary');
+
+            setTimeout(() => {
+              copyText.textContent = 'Copiar';
+              copyButton.classList.remove('bg-tertiary', 'text-on-tertiary');
+            }, 2000);
+          });
+        });
+
+        const copyAlterButton = document.getElementById('copy-alter-button');
+        const copyAlterText = document.getElementById('copy-alter-text');
+        const alterCode = document.getElementById('alter-code');
+
+        copyAlterButton.addEventListener('click', () => {
+          navigator.clipboard.writeText(alterCode.textContent).then(() => {
+            copyAlterText.textContent = 'Copiado!';
+            copyAlterButton.classList.add('bg-tertiary', 'text-on-tertiary');
+
+            setTimeout(() => {
+              copyAlterText.textContent = 'Copiar';
+              copyAlterButton.classList.remove('bg-tertiary', 'text-on-tertiary');
+            }, 2000);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
